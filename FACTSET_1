@@ -1,0 +1,28 @@
+/*Given a string S of parentheses ‘(‘ or ‘)’ where, 0\leq len(S)\leq 1000 . 
+The task is to find a minimum number of parentheses ‘(‘ or ‘)’ (at any positions) we must add to make the resulting parentheses string is valid.*/
+
+import java.util.Scanner;
+import java.util.Stack;
+public class Main {
+    public static int minParentheses(String p) {
+        Stack<Integer> stk = new Stack<>();
+        int ans = 0;
+        for (int i = 0; i < p.length(); ++i) {
+            if (p.charAt(i) == '(') {
+                stk.push(i);
+            } else {
+                if (!stk.empty()) {
+                    stk.pop();
+                } else {
+                    ans += 1;
+                }
+            }
+        }
+        return ans+stk.size();
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String p=sc.next();
+        System.out.println(minParentheses(p));
+    }
+}
