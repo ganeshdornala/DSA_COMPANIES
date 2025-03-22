@@ -1,0 +1,37 @@
+/*You’re given a grid (like a Bingo board), represented as an ArrayList<ArrayList<Integer>>, of size m x n, filled with distinct values from 1 to m*n.
+You're also given a list (array) of m*n numbers in some order — these are the numbers being "called out" one after the other.
+As each number is called, we mark it on the board.
+After each call, we check if any row or column is completely marked (i.e., all numbers in that row or column have been called).
+The moment a full row or column is marked, we print the number that caused the first Bingo.*/
+
+import java.util.*;
+public class BingoChecker {
+    public static void main(String[] args) {
+        int m = 3, n = 3;
+        ArrayList<ArrayList<Integer>> board = new ArrayList<>();
+        board.add(new ArrayList<>(Arrays.asList(1, 2, 3)));
+        board.add(new ArrayList<>(Arrays.asList(4, 5, 6)));
+        board.add(new ArrayList<>(Arrays.asList(7, 8, 9)));
+        int[] calledNumbers = {2, 4, 1, 5, 3, 6, 7, 9, 8};
+        Map<Integer, int[]> numToPos = new HashMap<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                numToPos.put(board.get(i).get(j), new int[]{i, j});
+            }
+        }
+        int[] rowCount = new int[m];
+        int[] colCount = new int[n];
+        boolean[][] marked = new boolean[m][n];
+        for (int num : calledNumbers) {
+            int[] pos = numToPos.get(num);
+            int row = pos[0], col = pos[1];
+            marked[row][col] = true;
+            rowCount[row]++;
+            colCount[col]++;
+            if (rowCount[row] == n || colCount[col] == m) {
+                System.out.println("Bingo on number: " + num);
+                break;
+            }
+        }
+    }
+}
